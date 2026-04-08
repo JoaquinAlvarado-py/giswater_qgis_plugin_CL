@@ -8,10 +8,10 @@ or (at your option) any later version.
 import math
 from functools import partial
 
-from ...ui.ui_manager import MduInfiltrationWorksUi
-from ....libs import tools_qgis, tools_qt
-from .... import global_vars
-from ...utils import tools_gw
+from ....ui.ui_manager import MduInfiltrationWorksUi
+from .....libs import tools_qgis, tools_qt
+from ..... import global_vars
+from ....utils import tools_gw
 
 
 # ---------------------------------------------------------------------------

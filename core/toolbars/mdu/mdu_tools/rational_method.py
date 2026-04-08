@@ -14,10 +14,10 @@ from qgis.PyQt.QtWidgets import (
     QTableWidgetItem,
 )
 
-from .... import global_vars
-from ....libs import tools_qgis, tools_qt
-from ...utils import tools_gw
-from ...ui.ui_manager import MduRationalMethodUi
+from ..... import global_vars
+from .....libs import tools_qgis, tools_qt
+from ....utils import tools_gw
+from ....ui.ui_manager import MduRationalMethodUi
 
 
 # Chilean runoff coefficient reference values (MDU Tables 4.3.15 - 4.3.17)

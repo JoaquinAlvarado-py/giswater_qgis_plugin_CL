@@ -10,10 +10,10 @@ from functools import partial
 
 from qgis.PyQt.QtWidgets import QTableWidgetItem, QHeaderView
 
-from ...ui.ui_manager import MduRetentionWorksUi
-from ....libs import tools_qgis, tools_qt
-from .... import global_vars
-from ...utils import tools_gw
+from ....ui.ui_manager import MduRetentionWorksUi
+from .....libs import tools_qgis, tools_qt
+from ..... import global_vars
+from ....utils import tools_gw
 
 
 # ---------------------------------------------------------------------------

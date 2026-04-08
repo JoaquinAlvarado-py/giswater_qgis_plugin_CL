@@ -11,10 +11,10 @@ from functools import partial
 
 from qgis.PyQt.QtWidgets import QTableWidgetItem, QFileDialog
 
-from ...ui.ui_manager import MduIdfCurvesUi
-from ....libs import tools_qgis, tools_qt
-from .... import global_vars
-from ...utils import tools_gw
+from ....ui.ui_manager import MduIdfCurvesUi
+from .....libs import tools_qgis, tools_qt
+from ..... import global_vars
+from ....utils import tools_gw
 
 
 # ---------------------------------------------------------------------------
