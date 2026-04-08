@@ -32,13 +32,13 @@ class GwMduTools(GwAction):
 
         self.menu = QMenu()
         self.menu.setObjectName("GW_mdu_tools")
-        self._fill_action_menu()
 
         if toolbar is not None:
             self.action.setMenu(self.menu)
             toolbar.addAction(self.action)
 
     def clicked_event(self):
+        self.menu.clear()
         self._fill_action_menu()
         if hasattr(self.action, 'associatedObjects'):
             button = QWidget(self.action.associatedObjects()[1])
@@ -50,67 +50,41 @@ class GwMduTools(GwAction):
     def _fill_action_menu(self):
         """ Fill action menu with MDU tool options """
 
-        actions = self.menu.actions()
-        for action in actions:
-            action.disconnect()
-            self.menu.removeAction(action)
-            del action
         ag = QActionGroup(self.iface.mainWindow())
 
-        hydro_menu = self.menu.addMenu(tools_qt.tr("Hidrologia"))
-        design_menu = self.menu.addMenu(tools_qt.tr("Diseno de Obras"))
-        network_menu = self.menu.addMenu(tools_qt.tr("Red de Drenaje"))
+        hydro_menu = self.menu.addMenu("Hidrologia")
+        design_menu = self.menu.addMenu("Diseno de Obras")
+        network_menu = self.menu.addMenu("Red de Drenaje")
 
-        new_actions = [
-            (hydro_menu, ('ud', 'ws'), tools_qt.tr('Curvas IDF Chile'), None),
-            (hydro_menu, ('ud', 'ws'), tools_qt.tr('Metodo Racional'), None),
-            (hydro_menu, ('ud', 'ws'), tools_qt.tr('Tiempo de Concentracion'), None),
-            (design_menu, ('ud', 'ws'), tools_qt.tr('Diseno de Sumideros'), None),
-            (design_menu, ('ud', 'ws'), tools_qt.tr('Obras de Infiltracion'), None),
-            (design_menu, ('ud', 'ws'), tools_qt.tr('Obras de Retencion'), None),
-            (network_menu, ('ud', 'ws'), tools_qt.tr('Clasificacion Jerarquica'), None),
+        tool_actions = [
+            (hydro_menu, 'Curvas IDF Chile'),
+            (hydro_menu, 'Metodo Racional'),
+            (hydro_menu, 'Tiempo de Concentracion'),
+            (design_menu, 'Diseno de Sumideros'),
+            (design_menu, 'Obras de Infiltracion'),
+            (design_menu, 'Obras de Retencion'),
+            (network_menu, 'Clasificacion Jerarquica'),
         ]
 
-        for menu, types, action, icon in new_actions:
-            if global_vars.project_type in types:
-                if icon:
-                    obj_action = QAction(icon, f"{action}", ag)
-                else:
-                    obj_action = QAction(f"{action}", ag)
-                menu.addAction(obj_action)
-                obj_action.triggered.connect(partial(self._get_selected_action, action))
-
-        for menu in self.menu.findChildren(QMenu):
-            if not len(menu.actions()):
-                menu.menuAction().setParent(None)
+        for menu, action_name in tool_actions:
+            obj_action = QAction(f"{action_name}", ag)
+            menu.addAction(obj_action)
+            obj_action.triggered.connect(partial(self._get_selected_action, action_name))
 
     def _get_selected_action(self, name):
         """ Gets selected action """
 
-        if name == tools_qt.tr('Curvas IDF Chile'):
-            tool = IdfCurves()
-            tool.clicked_event()
+        tools = {
+            'Curvas IDF Chile': IdfCurves,
+            'Metodo Racional': RationalMethod,
+            'Tiempo de Concentracion': TimeOfConcentration,
+            'Diseno de Sumideros': InletDesign,
+            'Obras de Infiltracion': InfiltrationWorks,
+            'Obras de Retencion': RetentionWorks,
+            'Clasificacion Jerarquica': NetworkHierarchy,
+        }
 
-        elif name == tools_qt.tr('Metodo Racional'):
-            tool = RationalMethod()
-            tool.clicked_event()
-
-        elif name == tools_qt.tr('Tiempo de Concentracion'):
-            tool = TimeOfConcentration()
-            tool.clicked_event()
-
-        elif name == tools_qt.tr('Diseno de Sumideros'):
-            tool = InletDesign()
-            tool.clicked_event()
-
-        elif name == tools_qt.tr('Obras de Infiltracion'):
-            tool = InfiltrationWorks()
-            tool.clicked_event()
-
-        elif name == tools_qt.tr('Obras de Retencion'):
-            tool = RetentionWorks()
-            tool.clicked_event()
-
-        elif name == tools_qt.tr('Clasificacion Jerarquica'):
-            tool = NetworkHierarchy()
+        tool_class = tools.get(name)
+        if tool_class:
+            tool = tool_class()
             tool.clicked_event()
