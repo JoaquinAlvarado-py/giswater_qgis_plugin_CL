@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_network_hierarchy</class>
+ <widget class="QDialog" name="dlg_mdu_network_hierarchy">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>650</width><height>500</height></rect></property>
+  <property name="windowTitle"><string>Clasificacion Jerarquica de Red (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_classify">
+      <attribute name="title"><string>Clasificacion</string></attribute>
+      <layout class="QVBoxLayout" name="class_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_input">
+         <property name="title"><string>Datos de la Red</string></property>
+         <layout class="QGridLayout" name="grid_input">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_area"><property name="text"><string>Area aportante [ha]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_area"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_network_type"><property name="text"><string>Tipo red:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="cmb_network_type"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_classification">
+         <property name="title"><string>Resultado Clasificacion</string></property>
+         <layout class="QGridLayout" name="grid_class">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_hierarchy"><property name="text"><string>Nivel jerarquico:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_hierarchy"><property name="readOnly"><bool>true</bool></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_return_period"><property name="text"><string>Periodo de retorno:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_return_period"><property name="readOnly"><bool>true</bool></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_allowed_methods"><property name="text"><string>Metodos permitidos:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_allowed_methods"><property name="readOnly"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_standards">
+      <attribute name="title"><string>Estandares de Diseno</string></attribute>
+      <layout class="QVBoxLayout" name="std_layout">
+       <item><widget class="QTableWidget" name="tbl_standards"/></item>
+       <item><widget class="QTextEdit" name="txt_validation"><property name="readOnly"><bool>true</bool></property></widget></item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_validation">
+      <attribute name="title"><string>Validacion</string></attribute>
+      <layout class="QVBoxLayout" name="val_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_val_input">
+         <property name="title"><string>Parametros de Diseno a Validar</string></property>
+         <layout class="QGridLayout" name="grid_val">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_val_velocity"><property name="text"><string>Velocidad [m/s]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_val_velocity"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_val_depth"><property name="text"><string>Profundidad [m]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_val_depth"/></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_val_slope"><property name="text"><string>Pendiente [m/m]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_val_slope"/></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_val_diameter"><property name="text"><string>Diametro [mm]:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_val_diameter"/></item>
+          <item row="4" column="0"><widget class="QLabel" name="lbl_val_cover"><property name="text"><string>Recubrimiento [m]:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="txt_val_cover"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item><widget class="QTextEdit" name="txt_val_results"><property name="readOnly"><bool>true</bool></property></widget></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_classify"><property name="text"><string>Clasificar</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_validate"><property name="text"><string>Validar</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_inlet_design</class>
+ <widget class="QDialog" name="dlg_mdu_inlet_design">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>750</width><height>600</height></rect></property>
+  <property name="windowTitle"><string>Diseno de Sumideros (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_gutter">
+      <attribute name="title"><string>Flujo en Cuneta</string></attribute>
+      <layout class="QVBoxLayout" name="gutter_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_gutter">
+         <property name="title"><string>Parametros de Cuneta (Manning)</string></property>
+         <layout class="QGridLayout" name="grid_gutter">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_gutter_n"><property name="text"><string>Manning n:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_gutter_n"><property name="text"><string>0.016</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_long_slope"><property name="text"><string>Pendiente longitudinal SL:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_long_slope"><property name="placeholderText"><string>m/m</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_cross_slope"><property name="text"><string>Pendiente transversal ST:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_cross_slope"><property name="placeholderText"><string>m/m</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_gutter_width"><property name="text"><string>Ancho de inundacion T [m]:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_gutter_width"><property name="placeholderText"><string>Spread</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="lbl_flow_q"><property name="text"><string>Caudal Q [l/s]:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="txt_flow_q"><property name="placeholderText"><string>Caudal en cuneta</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_inlet">
+      <attribute name="title"><string>Tipo de Sumidero</string></attribute>
+      <layout class="QVBoxLayout" name="inlet_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_inlet_type">
+         <property name="title"><string>Seleccion de Sumidero</string></property>
+         <layout class="QGridLayout" name="grid_inlet">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_inlet_type"><property name="text"><string>Tipo:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_inlet_type"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_inlet_length"><property name="text"><string>Largo sumidero L [m]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_inlet_length"><property name="text"><string>0.90</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_inlet_width"><property name="text"><string>Ancho sumidero W [m]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_inlet_width"><property name="text"><string>0.45</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_inlet_method"><property name="text"><string>Metodo:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QComboBox" name="cmb_inlet_method"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_fhwa">
+         <property name="title"><string>Parametros FHWA</string></property>
+         <layout class="QGridLayout" name="grid_fhwa">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_perimeter"><property name="text"><string>Perimetro efectivo P [m]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_perimeter"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_clogging"><property name="text"><string>Factor de colmatacion:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_clogging"><property name="text"><string>0.5</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_results">
+      <attribute name="title"><string>Resultados</string></attribute>
+      <layout class="QVBoxLayout" name="results_layout">
+       <item><widget class="QTextEdit" name="txt_results"><property name="readOnly"><bool>true</bool></property></widget></item>
+       <item><widget class="QTableWidget" name="tbl_spacing"/></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

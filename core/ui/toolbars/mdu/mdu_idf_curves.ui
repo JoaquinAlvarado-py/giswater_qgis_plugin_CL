@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_idf_curves</class>
+ <widget class="QDialog" name="dlg_mdu_idf_curves">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>720</width><height>560</height></rect></property>
+  <property name="windowTitle"><string>Curvas IDF - Chile (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_input">
+      <attribute name="title"><string>Entrada</string></attribute>
+      <layout class="QVBoxLayout" name="input_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_location">
+         <property name="title"><string>Ubicacion y Parametros</string></property>
+         <layout class="QGridLayout" name="grid_location">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_macrozone"><property name="text"><string>Macro-zona:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_macrozone"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_city"><property name="text"><string>Ciudad/Estacion:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="cmb_city"/></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_p10_60"><property name="text"><string>P(10,60) [mm]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_p10_60"><property name="placeholderText"><string>Precipitacion 60min T=10yr</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_return_periods"><property name="text"><string>Periodos de retorno:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_return_periods"><property name="text"><string>2, 5, 10, 25, 50, 100</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="lbl_durations"><property name="text"><string>Duraciones [min]:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="txt_durations"><property name="text"><string>5, 10, 15, 20, 30, 60, 120, 360, 720, 1440</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_method">
+         <property name="title"><string>Metodo</string></property>
+         <layout class="QVBoxLayout" name="method_layout">
+          <item><widget class="QRadioButton" name="rbt_bell"><property name="text"><string>Relacion de Bell (sub-horarias)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QRadioButton" name="rbt_dga_table"><property name="text"><string>Tablas DGA directas</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_results">
+      <attribute name="title"><string>Resultados IDF</string></attribute>
+      <layout class="QVBoxLayout" name="results_layout">
+       <item><widget class="QTableWidget" name="tbl_idf_results"/></item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_storm">
+      <attribute name="title"><string>Tormenta de Diseno</string></attribute>
+      <layout class="QVBoxLayout" name="storm_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_storm_params">
+         <property name="title"><string>Parametros de Tormenta</string></property>
+         <layout class="QGridLayout" name="grid_storm">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_storm_T"><property name="text"><string>Periodo de retorno [anos]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_storm_T"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_storm_duration"><property name="text"><string>Duracion tormenta [min]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_storm_duration"><property name="text"><string>120</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_storm_dt"><property name="text"><string>Intervalo dt [min]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_storm_dt"><property name="text"><string>5</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item><widget class="QTableWidget" name="tbl_storm_results"/></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_export"><property name="text"><string>Exportar CSV</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

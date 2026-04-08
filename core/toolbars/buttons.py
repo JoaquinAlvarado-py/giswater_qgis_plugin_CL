@@ -80,3 +80,6 @@ from .cm.resources_lot_btn import GwLotResourceManagementButton  # noqa: F401
 from .cm.selector_campaign_btn import GwSelectorCampaignButton  # noqa: F401
 from .cm.check_cm_project_btn import GwCheckCMProjectButton  # noqa: F401
 
+# MDU (Manual de Drenaje Urbano - Chile): 91
+from .mdu.mdu_tools_btn import GwMduTools  # noqa: F401
+

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_time_of_concentration</class>
+ <widget class="QDialog" name="dlg_mdu_time_of_concentration">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>680</width><height>520</height></rect></property>
+  <property name="windowTitle"><string>Tiempo de Concentracion (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_input">
+      <attribute name="title"><string>Parametros</string></attribute>
+      <layout class="QVBoxLayout" name="input_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_catchment">
+         <property name="title"><string>Datos de la Cuenca</string></property>
+         <layout class="QGridLayout" name="grid_catchment">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_length"><property name="text"><string>Longitud cauce L [m]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_length"><property name="placeholderText"><string>Longitud del cauce principal</string></property></widget></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_slope"><property name="text"><string>Pendiente S [m/m]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_slope"><property name="placeholderText"><string>Pendiente media del cauce</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_height_diff"><property name="text"><string>Desnivel H [m]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_height_diff"><property name="placeholderText"><string>Diferencia de altura</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_manning_n"><property name="text"><string>Manning n:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_manning_n"><property name="text"><string>0.015</string></property></widget></item>
+          <item row="4" column="0"><widget class="QLabel" name="lbl_intensity"><property name="text"><string>Intensidad i [mm/hr]:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="txt_intensity"><property name="placeholderText"><string>Para Morgali-Linsley</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_methods">
+         <property name="title"><string>Metodos a Calcular</string></property>
+         <layout class="QVBoxLayout" name="methods_layout">
+          <item><widget class="QCheckBox" name="chk_kirpich"><property name="text"><string>Kirpich: Tc = 0.0195 * L^0.77 / S^0.385</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QCheckBox" name="chk_california"><property name="text"><string>California Culverts: Tc = 0.0203 * (L1^3/H)^0.385</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QCheckBox" name="chk_morgali"><property name="text"><string>Morgali-Linsley: Tc = 7*L^0.6*n^0.6 / (i^0.4*S^0.3)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QCheckBox" name="chk_manning"><property name="text"><string>Manning (canales)</string></property><property name="checked"><bool>true</bool></property></widget></item>
+          <item><widget class="QCheckBox" name="chk_velocity"><property name="text"><string>Velocidad compuesta (tramos)</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_velocity">
+      <attribute name="title"><string>Tramos (Velocidad)</string></attribute>
+      <layout class="QVBoxLayout" name="vel_layout">
+       <item><widget class="QTableWidget" name="tbl_velocity_segments"/></item>
+       <item>
+        <layout class="QHBoxLayout" name="vel_btn_layout">
+         <item><widget class="QPushButton" name="btn_add_segment"><property name="text"><string>Agregar tramo</string></property></widget></item>
+         <item><widget class="QPushButton" name="btn_remove_segment"><property name="text"><string>Eliminar tramo</string></property></widget></item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_results">
+      <attribute name="title"><string>Comparacion</string></attribute>
+      <layout class="QVBoxLayout" name="results_layout">
+       <item><widget class="QTableWidget" name="tbl_tc_results"/></item>
+       <item><widget class="QTextEdit" name="txt_tc_summary"><property name="readOnly"><bool>true</bool></property></widget></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

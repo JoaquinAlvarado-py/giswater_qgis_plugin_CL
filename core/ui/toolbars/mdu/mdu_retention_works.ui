@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_retention_works</class>
+ <widget class="QDialog" name="dlg_mdu_retention_works">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>700</width><height>560</height></rect></property>
+  <property name="windowTitle"><string>Obras de Retencion/Almacenamiento (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_input">
+      <attribute name="title"><string>Parametros</string></attribute>
+      <layout class="QVBoxLayout" name="input_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_inflow">
+         <property name="title"><string>Hidrograma de Entrada</string></property>
+         <layout class="QGridLayout" name="grid_inflow">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_qp_in"><property name="text"><string>Caudal punta Qp [l/s]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_qp_in"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_vol_in"><property name="text"><string>Volumen entrada [m3]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_vol_in"/></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_tb"><property name="text"><string>Tiempo base Tb [min]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_tb"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_pond">
+         <property name="title"><string>Estanque de Retencion</string></property>
+         <layout class="QGridLayout" name="grid_pond">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_pond_type"><property name="text"><string>Tipo:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_pond_type"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_area_pond"><property name="text"><string>Area en planta [m2]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_area_pond"/></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_depth_lower"><property name="text"><string>Prof. nivel inferior [m]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_depth_lower"/></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_depth_upper"><property name="text"><string>Prof. nivel superior [m]:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_depth_upper"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_outlet">
+         <property name="title"><string>Estructura de Descarga</string></property>
+         <layout class="QGridLayout" name="grid_outlet">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_orifice_d"><property name="text"><string>Diametro orificio [m]:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_orifice_d"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_orifice_cd"><property name="text"><string>Cd orificio:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_orifice_cd"><property name="text"><string>0.62</string></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_weir_l"><property name="text"><string>Largo vertedero [m]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_weir_l"/></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_weir_cd"><property name="text"><string>Cd vertedero:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_weir_cd"><property name="text"><string>1.84</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_routing">
+      <attribute name="title"><string>Transito de Crecida</string></attribute>
+      <layout class="QVBoxLayout" name="routing_layout">
+       <item><widget class="QTableWidget" name="tbl_routing"/></item>
+       <item><widget class="QTextEdit" name="txt_routing_summary"><property name="readOnly"><bool>true</bool></property></widget></item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_vol_elev">
+      <attribute name="title"><string>Curva Vol-Elev</string></attribute>
+      <layout class="QVBoxLayout" name="vol_elev_layout">
+       <item><widget class="QTableWidget" name="tbl_vol_elev"/></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlg_mdu_infiltration_works</class>
+ <widget class="QDialog" name="dlg_mdu_infiltration_works">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>720</width><height>580</height></rect></property>
+  <property name="windowTitle"><string>Obras de Infiltracion (MDU)</string></property>
+  <layout class="QVBoxLayout" name="main_layout">
+   <item>
+    <widget class="QTabWidget" name="mainTab">
+     <widget class="QWidget" name="tab_capture">
+      <attribute name="title"><string>Volumen de Captura</string></attribute>
+      <layout class="QVBoxLayout" name="capture_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_macrozone">
+         <property name="title"><string>Macro-zona y Precipitacion Base</string></property>
+         <layout class="QGridLayout" name="grid_macro">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_macrozone"><property name="text"><string>Macro-zona:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_macrozone"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_pb"><property name="text"><string>Precipitacion base PB [mm]:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_pb"><property name="readOnly"><bool>true</bool></property></widget></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_area_t"><property name="text"><string>Area tributaria AT [m2]:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_area_t"><property name="placeholderText"><string>Area tributaria total</string></property></widget></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_vc"><property name="text"><string>Volumen de captura Vc [m3]:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_vc"><property name="readOnly"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_work_type">
+      <attribute name="title"><string>Tipo de Obra</string></attribute>
+      <layout class="QVBoxLayout" name="work_layout">
+       <item>
+        <widget class="QGroupBox" name="grp_work_type">
+         <property name="title"><string>Seleccion y Dimensionamiento</string></property>
+         <layout class="QGridLayout" name="grid_work">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_work_type"><property name="text"><string>Tipo de obra:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="cmb_work_type"/></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grp_params">
+         <property name="title"><string>Parametros Especificos</string></property>
+         <layout class="QGridLayout" name="grid_params">
+          <item row="0" column="0"><widget class="QLabel" name="lbl_param1"><property name="text"><string>Param 1:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="txt_param1"/></item>
+          <item row="1" column="0"><widget class="QLabel" name="lbl_param2"><property name="text"><string>Param 2:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="txt_param2"/></item>
+          <item row="2" column="0"><widget class="QLabel" name="lbl_param3"><property name="text"><string>Param 3:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="txt_param3"/></item>
+          <item row="3" column="0"><widget class="QLabel" name="lbl_param4"><property name="text"><string>Param 4:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QLineEdit" name="txt_param4"/></item>
+          <item row="4" column="0"><widget class="QLabel" name="lbl_param5"><property name="text"><string>Param 5:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="txt_param5"/></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_results">
+      <attribute name="title"><string>Resultados</string></attribute>
+      <layout class="QVBoxLayout" name="results_layout">
+       <item><widget class="QTextEdit" name="txt_results"><property name="readOnly"><bool>true</bool></property></widget></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="btn_layout">
+     <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

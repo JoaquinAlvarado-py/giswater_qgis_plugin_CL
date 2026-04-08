@@ -432,6 +432,11 @@ class GwLoadProject(QObject):
                     toolbars_order_list.append(toolbar_id)
                     config_was_updated = True
 
+        # Always include MDU toolbar if available in config
+        if 'mdu' not in toolbars_order_list:
+            toolbars_order_list.append('mdu')
+            config_was_updated = True
+
         if config_was_updated:
             new_toolbars_order = ",".join(toolbars_order_list)
             tools_gw.set_config_parser('toolbars_position', 'toolbars_order', new_toolbars_order, "user", "init")

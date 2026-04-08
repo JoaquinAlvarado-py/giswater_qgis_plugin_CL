@@ -23,7 +23,7 @@ def _get_ui_class(ui_file_name, subfolder='shared'):
     """ Get UI Python class from @ui_file_name """
 
     # Folder that contains UI files
-    if subfolder in ('basic', 'edit', 'epa', 'om', 'plan', 'utilities', 'toc', 'am', 'cm'):
+    if subfolder in ('basic', 'edit', 'epa', 'om', 'plan', 'utilities', 'toc', 'am', 'cm', 'mdu'):
         ui_folder_path = os.path.dirname(__file__) + os.sep + 'toolbars' + os.sep + subfolder
     else:
         ui_folder_path = os.path.dirname(__file__) + os.sep + subfolder
@@ -1340,4 +1340,72 @@ FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
 class GwStatusSelectorUi(GwDialog, FORM_CLASS):
     CONTEXT = CONTEXT
     UINAME = UINAME
+# endregion
+
+
+# region MDU (Manual de Drenaje Urbano - Chile)
+CONTEXT = "mdu"
+
+UINAME = "mdu_idf_curves"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduIdfCurvesUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_rational_method"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduRationalMethodUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_time_of_concentration"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduTimeOfConcentrationUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_inlet_design"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduInletDesignUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_infiltration_works"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduInfiltrationWorksUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_retention_works"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduRetentionWorksUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
+
+UINAME = "mdu_network_hierarchy"
+FORM_CLASS = _get_ui_class(f'{UINAME}.ui', f'{CONTEXT}')
+
+
+class MduNetworkHierarchyUi(GwDialog, FORM_CLASS):
+    CONTEXT = CONTEXT
+    UINAME = UINAME
+
 # endregion
