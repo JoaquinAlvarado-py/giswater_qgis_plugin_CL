@@ -39,6 +39,7 @@ class GwMduTools(GwAction):
             toolbar.addAction(self.action)
 
     def clicked_event(self):
+        self._fill_action_menu()
         if hasattr(self.action, 'associatedObjects'):
             button = QWidget(self.action.associatedObjects()[1])
         elif hasattr(self.action, 'associatedWidgets'):
