@@ -582,6 +582,8 @@ class GwLoadProject(QObject):
             plugin_toolbar.list_actions = list_actions
             self.plugin_toolbars[toolbar_id] = plugin_toolbar
             self._enable_toolbar(toolbar_id)
+            if toolbar_id == 'mdu':
+                plugin_toolbar.toolbar.setVisible(True)
 
     def _create_psector_status_bar(self):
         """Create Psector status bar with play/pause button and psector combobox."""
