@@ -69,7 +69,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="btn_layout">
+    <layout class="QGridLayout" name="lyt_buttons">
      <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
      <item><widget class="QPushButton" name="btn_classify"><property name="text"><string>Clasificar</string></property></widget></item>
      <item><widget class="QPushButton" name="btn_validate"><property name="text"><string>Validar</string></property></widget></item>

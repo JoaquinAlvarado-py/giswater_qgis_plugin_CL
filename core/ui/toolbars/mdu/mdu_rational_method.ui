@@ -72,7 +72,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="btn_layout">
+    <layout class="QGridLayout" name="lyt_buttons">
      <item><spacer name="spacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
      <item><widget class="QPushButton" name="btn_calculate"><property name="text"><string>Calcular</string></property></widget></item>
      <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Cerrar</string></property></widget></item>
