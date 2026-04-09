@@ -490,12 +490,13 @@ class GwLoadProject(QObject):
         # Disable and hide all plugin_toolbars and actions
         self._enable_toolbars(False)
 
-        # Enable toolbars: 'basic', 'utilities', 'toc'
+        # Enable toolbars: 'basic', 'utilities', 'toc', 'mdu'
         self._enable_toolbar("basic")
         self._enable_toolbar("utilities")
         self._enable_toolbar("toc")
         self._enable_toolbar("am")
         self._enable_toolbar("cm")
+        self._enable_toolbar("mdu")
 
         # Check if audit exists
         sql = "SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'audit'"
