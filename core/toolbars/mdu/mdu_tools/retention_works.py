@@ -440,7 +440,7 @@ class RetentionWorks:
     def clicked_event(self):
         """Open the Retention Works dialog and wire all signals."""
 
-        self.dlg_ret = MduRetentionWorksUi()
+        self.dlg_ret = MduRetentionWorksUi(self)
         dlg = self.dlg_ret
         tools_gw.load_settings(dlg)
 

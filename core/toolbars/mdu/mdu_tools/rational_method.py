@@ -61,7 +61,7 @@ class RationalMethod:
     def clicked_event(self):
         """Open the Rational Method dialog and wire up all signals."""
 
-        self.dlg = MduRationalMethodUi()
+        self.dlg = MduRationalMethodUi(self)
         tools_gw.load_settings(self.dlg)
 
         self.dlg.cmb_c_method.clear()

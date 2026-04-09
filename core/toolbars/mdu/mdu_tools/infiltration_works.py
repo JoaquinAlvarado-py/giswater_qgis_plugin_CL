@@ -128,7 +128,7 @@ class InfiltrationWorks:
     def clicked_event(self):
         """Open the Infiltration Works dialog and wire all signals."""
 
-        self.dlg_inf = MduInfiltrationWorksUi()
+        self.dlg_inf = MduInfiltrationWorksUi(self)
         dlg = self.dlg_inf
         tools_gw.load_settings(dlg)
 

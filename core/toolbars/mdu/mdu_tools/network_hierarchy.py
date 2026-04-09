@@ -106,7 +106,7 @@ class NetworkHierarchy:
 
     def clicked_event(self):
 
-        self.dlg_nh = MduNetworkHierarchyUi()
+        self.dlg_nh = MduNetworkHierarchyUi(self)
         dlg = self.dlg_nh
         tools_gw.load_settings(dlg)
 

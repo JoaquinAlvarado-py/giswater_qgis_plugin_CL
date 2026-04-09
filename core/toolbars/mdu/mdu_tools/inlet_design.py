@@ -80,7 +80,7 @@ class InletDesign:
     def clicked_event(self):
         """Open the Inlet Design dialog and wire up all widgets."""
 
-        self.dlg_inlet = MduInletDesignUi()
+        self.dlg_inlet = MduInletDesignUi(self)
         dlg = self.dlg_inlet
         tools_gw.load_settings(dlg)
 

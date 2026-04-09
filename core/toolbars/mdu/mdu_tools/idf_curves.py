@@ -111,7 +111,7 @@ class IdfCurves:
     def clicked_event(self):
         """Open the IDF curves dialog and wire all signals."""
 
-        self.dlg_idf = MduIdfCurvesUi()
+        self.dlg_idf = MduIdfCurvesUi(self)
         dlg = self.dlg_idf
         tools_gw.load_settings(dlg)
 
