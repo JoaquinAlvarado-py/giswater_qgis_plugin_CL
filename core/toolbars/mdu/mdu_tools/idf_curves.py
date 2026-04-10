@@ -9,12 +9,17 @@ import math
 import os
 from functools import partial
 
-from qgis.PyQt.QtWidgets import QTableWidgetItem, QFileDialog
+from qgis.PyQt.QtWidgets import QTableWidgetItem, QFileDialog, QSizePolicy
 
 from ....ui.ui_manager import MduIdfCurvesUi
 from .....libs import tools_qgis, tools_qt
 from ..... import global_vars
 from ....utils import tools_gw
+
+try:
+    from ....utils.matplotlib_widget import MplCanvas
+except (ImportError, TypeError):
+    MplCanvas = None
 
 
 # ---------------------------------------------------------------------------
@@ -308,6 +313,7 @@ class IdfCurves:
         self._last_p10_60 = p10_60
 
         self._fill_idf_table(return_periods, durations)
+        self._plot_idf_curves(return_periods, durations)
 
     def _fill_idf_table(self, return_periods, durations):
         """Populate tbl_idf_results QTableWidget with computed intensities."""
@@ -335,6 +341,37 @@ class IdfCurves:
                 tbl.setItem(row_idx, col_idx + 1, item_val)
 
         tbl.resizeColumnsToContents()
+
+    def _plot_idf_curves(self, return_periods, durations):
+        """Plot IDF curves on the lyt_plot_idf layout."""
+
+        if MplCanvas is None:
+            return
+
+        dlg = self.dlg_idf
+        layout = getattr(dlg, 'lyt_plot_idf', None)
+        if layout is None:
+            return
+
+        canvas = self._create_canvas(layout)
+        if canvas is None:
+            return
+
+        ax = canvas.axes
+        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
+        for idx, T in enumerate(return_periods):
+            intensities = [self.idf_results[T][t] for t in durations]
+            color = colors[idx % len(colors)]
+            ax.plot(durations, intensities, marker='o', markersize=4,
+                    color=color, label=f'T={T} anos', linewidth=1.5)
+
+        ax.set_xlabel('Duracion (min)')
+        ax.set_ylabel('Intensidad (mm/hr)')
+        ax.set_title('Curvas IDF')
+        ax.legend(fontsize=7, loc='upper right')
+        ax.grid(True, alpha=0.3)
+        canvas.figure.tight_layout()
+        canvas.draw()
 
     # ------------------------------------------------------------------
     # Design storm (alternating block method)
@@ -444,6 +481,7 @@ class IdfCurves:
         self._last_storm_dt = dt
 
         self._fill_storm_table()
+        self._plot_storm_hyetograph()
 
     def _fill_storm_table(self):
         """Populate tbl_storm_results QTableWidget with the design storm."""
@@ -469,6 +507,62 @@ class IdfCurves:
             tbl.setItem(row_idx, 4, QTableWidgetItem(f"{block['intensity_mm_hr']:.2f}"))
 
         tbl.resizeColumnsToContents()
+
+    def _plot_storm_hyetograph(self):
+        """Plot the design storm as a bar chart (hyetograph)."""
+
+        if MplCanvas is None or not self.storm_results:
+            return
+
+        dlg = self.dlg_idf
+        layout = getattr(dlg, 'lyt_plot_storm', None)
+        if layout is None:
+            return
+
+        canvas = self._create_canvas(layout)
+        if canvas is None:
+            return
+
+        ax = canvas.axes
+        times = []
+        intensities = []
+        dt = self.storm_results[0]['time_end'] - self.storm_results[0]['time_start']
+
+        for block in self.storm_results:
+            times.append(block['time_start'])
+            intensities.append(block['intensity_mm_hr'])
+
+        ax.bar(times, intensities, width=dt * 0.9, align='edge',
+               color='#1f77b4', edgecolor='#0d4f8b', alpha=0.8)
+        ax.set_xlabel('Tiempo (min)')
+        ax.set_ylabel('Intensidad (mm/hr)')
+        ax.set_title(f'Tormenta de Diseno - Bloques Alternados (T={self._last_storm_T} anos)')
+        ax.grid(True, axis='y', alpha=0.3)
+        canvas.figure.tight_layout()
+        canvas.draw()
+
+    # ------------------------------------------------------------------
+    # Canvas helper
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _create_canvas(layout, width=5, height=3):
+        """Create a MplCanvas and add it to the given layout, removing any previous one."""
+
+        if MplCanvas is None:
+            return None
+
+        for i in reversed(range(layout.count())):
+            item = layout.itemAt(i)
+            if item and item.widget():
+                item.widget().setParent(None)
+
+        canvas = MplCanvas(None, width=width, height=height, dpi=100)
+        canvas.setSizePolicy(QSizePolicy.Policy.Expanding,
+                             QSizePolicy.Policy.Expanding)
+        canvas.setMinimumSize(100, 100)
+        layout.addWidget(canvas, 0, 0)
+        return canvas
 
     # ------------------------------------------------------------------
     # Export

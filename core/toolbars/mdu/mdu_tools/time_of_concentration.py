@@ -8,12 +8,17 @@ or (at your option) any later version.
 import math
 from functools import partial
 
-from qgis.PyQt.QtWidgets import QTableWidgetItem, QHeaderView
+from qgis.PyQt.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
 
 from ....ui.ui_manager import MduTimeOfConcentrationUi
 from .....libs import tools_qgis, tools_qt
 from ..... import global_vars
 from ....utils import tools_gw
+
+try:
+    from ....utils.matplotlib_widget import MplCanvas
+except (ImportError, TypeError):
+    MplCanvas = None
 
 
 # Minimum time of concentration for domiciliary networks (minutes) per MDU guidelines
@@ -198,6 +203,7 @@ class TimeOfConcentration:
 
         self._fill_results_table(results)
         self._fill_summary(results)
+        self._plot_tc_comparison(results)
 
     def _calculate_velocity_method(self):
         """Compute Tc using the velocity-based composite method from the segments table.
@@ -308,6 +314,58 @@ class TimeOfConcentration:
         lines.append("=" * 55)
 
         self.dlg_tc.txt_tc_summary.setText("\n".join(lines))
+
+    # ------------------------------------------------------------------
+    # Plotting
+    # ------------------------------------------------------------------
+
+    def _plot_tc_comparison(self, results):
+        """Plot a horizontal bar chart comparing Tc values from different methods."""
+
+        if MplCanvas is None:
+            return
+
+        dlg = self.dlg_tc
+        layout = getattr(dlg, 'lyt_plot_tc', None)
+        if layout is None:
+            return
+
+        valid = [(name, tc) for name, tc, _ in results if tc is not None]
+        if not valid:
+            return
+
+        for i in reversed(range(layout.count())):
+            item = layout.itemAt(i)
+            if item and item.widget():
+                item.widget().setParent(None)
+
+        canvas = MplCanvas(None, width=5, height=2.5, dpi=100)
+        canvas.setSizePolicy(QSizePolicy.Policy.Expanding,
+                             QSizePolicy.Policy.Expanding)
+        canvas.setMinimumSize(100, 80)
+        layout.addWidget(canvas, 0, 0)
+
+        ax = canvas.axes
+        names = [n.split('(')[0].strip() for n, _ in valid]
+        values = [tc for _, tc in valid]
+        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+
+        bars = ax.barh(names, values,
+                       color=[colors[i % len(colors)] for i in range(len(valid))],
+                       edgecolor='#333333', alpha=0.85)
+        for bar, val in zip(bars, values):
+            ax.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height() / 2,
+                    f'{val:.1f}', va='center', fontsize=7)
+
+        avg_tc = sum(values) / len(values)
+        ax.axvline(x=avg_tc, color='red', linestyle='--', linewidth=1,
+                   label=f'Promedio: {avg_tc:.1f} min')
+
+        ax.set_xlabel('Tc (min)')
+        ax.set_title('Comparacion de Metodos')
+        ax.legend(fontsize=7)
+        canvas.figure.tight_layout()
+        canvas.draw()
 
     # ------------------------------------------------------------------
     # Utility methods

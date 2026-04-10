@@ -8,12 +8,17 @@ or (at your option) any later version.
 import math
 from functools import partial
 
-from qgis.PyQt.QtWidgets import QTableWidgetItem, QHeaderView
+from qgis.PyQt.QtWidgets import QTableWidgetItem, QHeaderView, QSizePolicy
 
 from ....ui.ui_manager import MduRetentionWorksUi
 from .....libs import tools_qgis, tools_qt
 from ..... import global_vars
 from ....utils import tools_gw
+
+try:
+    from ....utils.matplotlib_widget import MplCanvas
+except (ImportError, TypeError):
+    MplCanvas = None
 
 
 # ---------------------------------------------------------------------------
@@ -603,11 +608,13 @@ class RetentionWorks:
         emergency_active = max_depth > total_depth
 
         self._fill_routing_table(routing_results)
+        self._plot_routing(routing_results)
 
         vel_table = build_volume_elevation_table(
             pond_type, area_pond, total_depth, side_slope, n_steps=20
         )
         self._fill_vol_elev_table(vel_table)
+        self._plot_vol_elev(vel_table)
 
         summary_lines = []
         summary_lines.append("=" * 58)
@@ -663,6 +670,90 @@ class RetentionWorks:
         summary_lines.append("=" * 58)
 
         dlg.txt_routing_summary.setText("\n".join(summary_lines))
+
+    # ------------------------------------------------------------------
+    # Plotting
+    # ------------------------------------------------------------------
+
+    def _plot_routing(self, routing_results):
+        """Plot inflow vs outflow hydrographs on lyt_plot_routing."""
+
+        if MplCanvas is None or not routing_results:
+            return
+
+        dlg = self.dlg_ret
+        layout = getattr(dlg, 'lyt_plot_routing', None)
+        if layout is None:
+            return
+
+        canvas = self._create_canvas(layout)
+        if canvas is None:
+            return
+
+        ax = canvas.axes
+        times = [r['time_s'] / 60.0 for r in routing_results]
+        inflows = [r['inflow'] * 1000.0 for r in routing_results]
+        outflows = [r['outflow'] * 1000.0 for r in routing_results]
+
+        ax.plot(times, inflows, color='#1f77b4', linewidth=1.5, label='Entrada (Qin)')
+        ax.fill_between(times, inflows, alpha=0.2, color='#1f77b4')
+        ax.plot(times, outflows, color='#d62728', linewidth=1.5, label='Salida (Qout)')
+        ax.fill_between(times, outflows, alpha=0.2, color='#d62728')
+        ax.set_xlabel('Tiempo (min)')
+        ax.set_ylabel('Caudal (l/s)')
+        ax.set_title('Transito de Crecida')
+        ax.legend(fontsize=7)
+        ax.grid(True, alpha=0.3)
+        canvas.figure.tight_layout()
+        canvas.draw()
+
+    def _plot_vol_elev(self, vel_table):
+        """Plot volume-elevation curve on lyt_plot_vel."""
+
+        if MplCanvas is None or not vel_table:
+            return
+
+        dlg = self.dlg_ret
+        layout = getattr(dlg, 'lyt_plot_vel', None)
+        if layout is None:
+            return
+
+        canvas = self._create_canvas(layout)
+        if canvas is None:
+            return
+
+        ax = canvas.axes
+        elevations = [r['h'] for r in vel_table]
+        volumes = [r['volume'] for r in vel_table]
+
+        ax.plot(volumes, elevations, color='#2ca02c', linewidth=1.5, marker='o',
+                markersize=3)
+        ax.fill_betweenx(elevations, volumes, alpha=0.2, color='#2ca02c')
+        ax.set_xlabel('Volumen (m3)')
+        ax.set_ylabel('Elevacion (m)')
+        ax.set_title('Curva Volumen - Elevacion')
+        ax.grid(True, alpha=0.3)
+        canvas.figure.tight_layout()
+        canvas.draw()
+
+    @staticmethod
+    def _create_canvas(layout, width=5, height=3):
+        """Create a MplCanvas and add it to the given layout."""
+
+        if MplCanvas is None:
+            return None
+
+        for i in reversed(range(layout.count())):
+            item = layout.itemAt(i)
+            if item and item.widget():
+                item.widget().setParent(None)
+
+        canvas = MplCanvas(None, width=width, height=height, dpi=100)
+        canvas.setSizePolicy(QSizePolicy.Policy.Expanding,
+                             QSizePolicy.Policy.Expanding)
+        canvas.setMinimumSize(100, 100)
+        layout.addWidget(canvas, 0, 0)
+        return canvas
 
     # ------------------------------------------------------------------
     # Barrels / Cisterns calculation

@@ -11,6 +11,7 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtWidgets import (
     QComboBox,
     QHeaderView,
+    QSizePolicy,
     QTableWidgetItem,
 )
 
@@ -18,6 +19,11 @@ from ..... import global_vars
 from .....libs import tools_qgis, tools_qt
 from ....utils import tools_gw
 from ....ui.ui_manager import MduRationalMethodUi
+
+try:
+    from ....utils.matplotlib_widget import MplCanvas
+except (ImportError, TypeError):
+    MplCanvas = None
 
 
 # Chilean runoff coefficient reference values (MDU Tables 4.3.15 - 4.3.17)
@@ -310,6 +316,7 @@ class RationalMethod:
         hydrograph = self._generate_hydrograph(Q, duration, tc)
         self._fill_results(Q, K, c_value, intensity, area, tc, duration, use_modified)
         self._fill_hydrograph_table(hydrograph)
+        self._plot_hydrograph(hydrograph)
 
     # -------------------------------------------------------------------------
     # Formulas
@@ -475,3 +482,37 @@ class RationalMethod:
             item_q = QTableWidgetItem(f"{q:.4f}")
             item_q.setFlags(item_q.flags() & ~Qt.ItemFlag.ItemIsEditable)
             tbl.setItem(row_idx, 1, item_q)
+
+    def _plot_hydrograph(self, hydrograph):
+        """Plot the hydrograph on lyt_plot_hydro."""
+
+        if MplCanvas is None or not hydrograph:
+            return
+
+        layout = getattr(self.dlg, 'lyt_plot_hydro', None)
+        if layout is None:
+            return
+
+        for i in reversed(range(layout.count())):
+            item = layout.itemAt(i)
+            if item and item.widget():
+                item.widget().setParent(None)
+
+        canvas = MplCanvas(None, width=5, height=3, dpi=100)
+        canvas.setSizePolicy(QSizePolicy.Policy.Expanding,
+                             QSizePolicy.Policy.Expanding)
+        canvas.setMinimumSize(100, 100)
+        layout.addWidget(canvas, 0, 0)
+
+        ax = canvas.axes
+        times = [t for t, q in hydrograph]
+        flows = [q for t, q in hydrograph]
+
+        ax.fill_between(times, flows, alpha=0.3, color='#1f77b4')
+        ax.plot(times, flows, color='#1f77b4', linewidth=1.5)
+        ax.set_xlabel('Tiempo (min)')
+        ax.set_ylabel('Q (l/s)')
+        ax.set_title('Hidrograma de Diseno')
+        ax.grid(True, alpha=0.3)
+        canvas.figure.tight_layout()
+        canvas.draw()
