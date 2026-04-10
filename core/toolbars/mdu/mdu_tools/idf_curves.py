@@ -23,7 +23,8 @@ except (ImportError, TypeError):
 
 
 # ---------------------------------------------------------------------------
-# Chilean precipitation data from MDU Tables 4.3.1 / 4.3.2
+# Chilean precipitation data from MDU Table 4.3.3
+# P(10,60) = intensity at T=10yr, 1-hour duration [mm]
 # ---------------------------------------------------------------------------
 
 # Macro-zones defined in the MDU
@@ -40,49 +41,65 @@ MACROZONES = [
 ]
 
 # Stations: {city_name: {"p10_60": P(10,60) in mm, "macrozone": macro-zone name}}
+# Values from MDU Table 4.3.3 (Curvas IDF, Plan Maestro de Aguas Lluvias)
 STATIONS = {
-    # Estepa de Altura
-    "Putre": {"p10_60": 2.5, "macrozone": "Estepa de Altura"},
-    "Olague": {"p10_60": 3.0, "macrozone": "Estepa de Altura"},
+    # Estepa de Altura (estimated from Table 4.3.1 + coef. duracion)
+    "Putre": {"p10_60": 6.8, "macrozone": "Estepa de Altura"},
+    "Calama": {"p10_60": 3.0, "macrozone": "Estepa de Altura"},
 
-    # Desierto Arido
-    "Arica": {"p10_60": 0.0, "macrozone": "Desierto Arido"},
-    "Iquique": {"p10_60": 0.8, "macrozone": "Desierto Arido"},
-    "Antofagasta": {"p10_60": 1.5, "macrozone": "Desierto Arido"},
-    "Copiapo": {"p10_60": 3.4, "macrozone": "Desierto Arido"},
+    # Desierto Arido (Table 4.3.3)
+    "Arica": {"p10_60": 0.5, "macrozone": "Desierto Arido"},
+    "Iquique": {"p10_60": 0.6, "macrozone": "Desierto Arido"},
+    "Antofagasta": {"p10_60": 1.8, "macrozone": "Desierto Arido"},
+    "Copiapo": {"p10_60": 4.7, "macrozone": "Desierto Arido"},
+    "Vallenar": {"p10_60": 7.4, "macrozone": "Desierto Arido"},
 
-    # Semiarido
-    "La Serena": {"p10_60": 8.1, "macrozone": "Semiarido"},
-    "Ovalle": {"p10_60": 9.2, "macrozone": "Semiarido"},
-    "Illapel": {"p10_60": 10.5, "macrozone": "Semiarido"},
+    # Semiarido (Table 4.3.3)
+    "La Serena": {"p10_60": 10.5, "macrozone": "Semiarido"},
+    "Ovalle": {"p10_60": 11.4, "macrozone": "Semiarido"},
+    "Illapel": {"p10_60": 11.7, "macrozone": "Semiarido"},
+    "Quillota": {"p10_60": 14.2, "macrozone": "Semiarido"},
 
-    # Mediterraneo Costero
-    "Valparaiso": {"p10_60": 16.3, "macrozone": "Mediterraneo Costero"},
-    "Vina del Mar": {"p10_60": 15.8, "macrozone": "Mediterraneo Costero"},
+    # Mediterraneo Costero (Table 4.3.3)
+    "Valparaiso": {"p10_60": 14.6, "macrozone": "Mediterraneo Costero"},
+    "Vina del Mar": {"p10_60": 20.3, "macrozone": "Mediterraneo Costero"},
+    "San Antonio": {"p10_60": 14.1, "macrozone": "Mediterraneo Costero"},
     "Constitucion": {"p10_60": 17.0, "macrozone": "Mediterraneo Costero"},
+    "Penco-Tome": {"p10_60": 24.7, "macrozone": "Mediterraneo Costero"},
+    "Talcahuano": {"p10_60": 25.9, "macrozone": "Mediterraneo Costero"},
+    "Concepcion": {"p10_60": 25.1, "macrozone": "Mediterraneo Costero"},
+    "Coronel": {"p10_60": 20.2, "macrozone": "Mediterraneo Costero"},
+    "Lota": {"p10_60": 24.2, "macrozone": "Mediterraneo Costero"},
 
-    # Metropolitano
-    "Santiago (Quinta Normal)": {"p10_60": 12.3, "macrozone": "Metropolitano"},
+    # Metropolitano (Table 4.3.3)
+    "Santiago (Quinta Normal)": {"p10_60": 11.2, "macrozone": "Metropolitano"},
     "Santiago (Pudahuel)": {"p10_60": 11.8, "macrozone": "Metropolitano"},
     "Santiago (Tobalaba)": {"p10_60": 13.0, "macrozone": "Metropolitano"},
+    "Melipilla": {"p10_60": 14.4, "macrozone": "Metropolitano"},
 
-    # Mediterraneo Interior
-    "Rancagua": {"p10_60": 14.8, "macrozone": "Mediterraneo Interior"},
-    "Talca": {"p10_60": 16.5, "macrozone": "Mediterraneo Interior"},
-    "Chillan": {"p10_60": 18.2, "macrozone": "Mediterraneo Interior"},
-    "Concepcion": {"p10_60": 18.6, "macrozone": "Mediterraneo Interior"},
-    "Los Angeles": {"p10_60": 19.0, "macrozone": "Mediterraneo Interior"},
+    # Mediterraneo Interior (Table 4.3.3)
+    "Rancagua": {"p10_60": 10.1, "macrozone": "Mediterraneo Interior"},
+    "Machali": {"p10_60": 14.7, "macrozone": "Mediterraneo Interior"},
+    "San Fernando": {"p10_60": 17.8, "macrozone": "Mediterraneo Interior"},
+    "Curico": {"p10_60": 16.0, "macrozone": "Mediterraneo Interior"},
+    "Talca": {"p10_60": 10.9, "macrozone": "Mediterraneo Interior"},
+    "Linares": {"p10_60": 16.0, "macrozone": "Mediterraneo Interior"},
+    "Chillan": {"p10_60": 24.2, "macrozone": "Mediterraneo Interior"},
+    "Los Angeles": {"p10_60": 21.6, "macrozone": "Mediterraneo Interior"},
 
-    # Templado Lluvioso
-    "Temuco": {"p10_60": 17.8, "macrozone": "Templado Lluvioso"},
-    "Valdivia": {"p10_60": 22.7, "macrozone": "Templado Lluvioso"},
-    "Osorno": {"p10_60": 21.5, "macrozone": "Templado Lluvioso"},
-    "Puerto Montt": {"p10_60": 18.0, "macrozone": "Templado Lluvioso"},
+    # Templado Lluvioso (Table 4.3.3)
+    "Temuco": {"p10_60": 16.7, "macrozone": "Templado Lluvioso"},
+    "Valdivia": {"p10_60": 18.8, "macrozone": "Templado Lluvioso"},
+    "Osorno": {"p10_60": 14.1, "macrozone": "Templado Lluvioso"},
+    "Puerto Montt": {"p10_60": 13.4, "macrozone": "Templado Lluvioso"},
 
-    # Templado Frio
+    # Templado Frio (estimated from Table 4.3.1 + coef. duracion)
     "Coyhaique": {"p10_60": 12.0, "macrozone": "Templado Frio"},
-    "Chile Chico": {"p10_60": 8.5, "macrozone": "Templado Frio"},
-    "Cochrane": {"p10_60": 14.0, "macrozone": "Templado Frio"},
+    "Puerto Aysen": {"p10_60": 15.0, "macrozone": "Templado Frio"},
+
+    # Continental Trasandino (estimated from Table 4.3.1 + coef. duracion)
+    "Punta Arenas": {"p10_60": 5.3, "macrozone": "Continental Trasandino"},
+    "Puerto Natales": {"p10_60": 6.8, "macrozone": "Continental Trasandino"},
 
     # Continental Trasandino
     "Punta Arenas": {"p10_60": 5.3, "macrozone": "Continental Trasandino"},
